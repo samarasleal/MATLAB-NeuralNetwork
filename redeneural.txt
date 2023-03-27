@@ -1,0 +1,27 @@
+function [ resp ] = redeneural( )
+% Criar vetores de entrada - Cada coluna é um xo x1 x2 x3 - Tamanho: [8,4]
+x = [1 0 0 0;1  0 0 1;1 0 1 0;1 0 1 1;1 1 0 0;1 1 0 1;1 1 1 0;1 1 1 1];
+% valores de saida desejados
+yd=[0 0; 0 1; 0 1; 0 1; 0 1; 0 1; 0 1; 1 1];
+% Valores da matriz w [4,2]
+w = -0.5 + rand(4,2);
+
+%valores de saida encontrados
+for i=1:2
+    for j=1:8
+        for k=1:4
+            % Multiplicar uma matriz x[8,4]por w[4,2] gerando y[8,2]
+            y(j,i)= x(j,k)*w(k,i);
+            % erro[8,2]
+            e(j,i)=yd(j,i)-y(j,i);
+            % Atualização de w[4,2] 
+            w(k+1,i)=w(k,i)+(1*x(j,k)'*e(j,i));
+            k=k+1;
+        end
+        j=j+1;
+    end
+    i=i+1;
+end
+y
+w
+e
